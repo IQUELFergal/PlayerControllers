@@ -12,9 +12,8 @@ public class TopDownPlayerController : MonoBehaviour
     public enum RotationMode { none, followMouse, controlledWithInputs };
 
     [Header("Speed")]
-    public float moveSpeed = 6;
-    /*public float walkSpeed = 2;
-    public float sprintSpeed = 8;*/
+    public float walkSpeed = 2;
+    public float sprintSpeed = 8;
     Vector2 lastInputDir;
 
     [Header("Smoothing")]
@@ -51,7 +50,7 @@ public class TopDownPlayerController : MonoBehaviour
         Vector2 inputDir = input.normalized;
         if (inputDir != Vector2.zero) lastInputDir = inputDir;
 
-        //bool running = Input.GetKey(KeyCode.LeftShift);
+        bool running = Input.GetKey(KeyCode.LeftShift);
 
         //Rotation
         if (rotationMode == RotationMode.none)
@@ -81,7 +80,7 @@ public class TopDownPlayerController : MonoBehaviour
         }
 
         //Position
-        //float targetSpeed = ((running) ? sprintSpeed : walkSpeed) * inputDir.magnitude;
+        float targetSpeed = ((running) ? sprintSpeed : walkSpeed) * inputDir.magnitude;
         float targetSpeed = moveSpeed * inputDir.magnitude;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
 
